@@ -1,2 +1,6 @@
 *.pyc
 .DS_Store
+client_secret_991941818036-v6cldf9g1r6rgb308kf8372v96mmvsaq.apps.googleusercontent.com.json
+credentials.json
+secrets.sh
+token.json
