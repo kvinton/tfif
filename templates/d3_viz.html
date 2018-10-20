@@ -43,6 +43,7 @@ var svg = d3.select("body").append("svg")
 var link = svg.selectAll(".link"),
     node = svg.selectAll(".node");
 
+
 d3.json("graph.json", function(error, json) {
   if (error) throw error;
 
@@ -76,6 +77,7 @@ function update() {
   var nodeEnter = node.enter().append("g")
       .attr("class", "node")
       .on("click", click)
+      .on("mouseover", handleMouseOver)
       .call(force.drag);
 
   nodeEnter.append("circle")
@@ -115,6 +117,34 @@ function click(d) {
     d._children = null;
   }
   update();
+}
+
+// var xScale = d3.scale.linear()
+//           .domain([0, d3.max(dataset, function (d) { return d.x + 10; })])
+//           .range([margin.left, w - margin.right]);  // Set margins for x specific
+// // We're passing in a function in d3.max to tell it what we're maxing (y value)
+// var yScale = d3.scale.linear()
+//     .domain([0, d3.max(dataset, function (d) { return d.y + 10; })])
+//     .range([margin.top, h - margin.bottom]);  // Set margins for y specific
+
+function handleMouseOver(d, i) {  // Add interactivity
+  console.log("d: " + JSON.stringify(d));
+  console.log("i: " + i);
+  // Use D3 to select element, change color and size
+  d3.select(this).attr({
+    fill: "orange",
+    r: this.size * 2
+
+  });
+  // Specify where to put label of text
+  // svg.append("text").attr({
+  //    id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
+  //     x: function() { return xScale(d.x) - 30; },
+  //     y: function() { return yScale(d.y) - 15; }
+  // })
+  // .text(function() {
+  //   return [d.x, d.y];  // Value of the text
+  // });
 }
 
 // Returns a list of all nodes under the root.
