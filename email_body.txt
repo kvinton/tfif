@@ -1,8 +1,12 @@
 Hi {PERSON_NAME}, 
 
-For our hackathon project we are collecting information from you about the women in tech that you admire! Please help us by filling out the google form below. Thank you in advance.
+For our hackathon project we are collecting information from you about the women in tech that you admire! 
+Please help us by filling out the google form below. Thank you in advance.
 
 https://goo.gl/forms/r9CH6kA4BbapXh7v2
 
 Sincerely,
 TFIF (The Future is Female) Hackathon Team
+
+P.S. Someone has described you using these three adjectives: 
+{ADJ1}, {ADJ2}, {ADJ3}

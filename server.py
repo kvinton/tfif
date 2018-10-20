@@ -60,6 +60,33 @@ def graph():
 
   return jsonify(data)
 
+@app.route('/words.json')
+def words():
+
+  rows = get_all_rows_from_db()
+
+  compliments = []
+
+  for row in rows:
+    compliments.append(row["admiree_1_adjective_1"])
+    compliments.append(row["admiree_1_adjective_2"])
+    compliments.append(row["admiree_1_adjective_3"])
+    compliments.append(row["admiree_2_adjective_1"])
+    compliments.append(row["admiree_2_adjective_2"])
+    compliments.append(row["admiree_2_adjective_3"])
+    compliments.append(row["admiree_3_adjective_1"])
+    compliments.append(row["admiree_3_adjective_2"])
+    compliments.append(row["admiree_3_adjective_3"])
+
+  compliment_string = " ".join(compliments)
+
+  return jsonify(compliment_string)
+
+@app.route("/word_cloud")
+def word_cloud():
+
+  return render_template("word_cloud.html")
+
 
 if __name__ == "__main__":
 
