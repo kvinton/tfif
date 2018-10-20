@@ -7,6 +7,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from datetime import datetime, timedelta
 
+from google_sheet import get_all_rows_from_db
+
 app = Flask(__name__)
 
 app.secret_key = "ABC"
@@ -31,41 +33,30 @@ def d3():
 @app.route('/graph.json')
 def graph():
 
-  data = {
- "name": "flare",
- "children": [
-  {
-   "name": "analytics",
-   "children": [
-    {
-     "name": "cluster",
-     "children": [
-      {"name": "AgglomerativeCluster", "size": 3938},
-      {"name": "CommunityStructure", "size": 3812},
-      {"name": "HierarchicalCluster", "size": 6714},
-      {"name": "MergeEdge", "size": 743}
-     ]
-    },
-    {
-     "name": "graph",
-     "children": [
-      {"name": "BetweennessCentrality", "size": 3534},
-      {"name": "LinkDistance", "size": 5731},
-      {"name": "MaxFlowMinCut", "size": 7840},
-      {"name": "ShortestPaths", "size": 5914},
-      {"name": "SpanningTree", "size": 3416}
-     ]
-    },
-    {
-     "name": "optimization",
-     "children": [
-      {"name": "AspectRatioBanker", "size": 7074}
-     ]
-    }
-   ]
-  }
- ]
-}
+  # temporary until we get database
+  rows = get_all_rows_from_db()
+
+  children = []
+  for row in rows:
+    child = {}
+
+    child["name"] = row["sender_first_name"]
+
+    child_children = []
+    child_children.append({"name": row["admiree_1_first_name"], "size": 50000})
+    if row["admiree_2_first_name"]:
+      child_children.append({"name": row["admiree_2_first_name"], "size": 50000})
+    if row["admiree_3_first_name"]:
+      child_children.append({"name": row["admiree_3_first_name"], "size": 50000})
+
+    child["children"] = child_children
+    child["size"] = 50000
+
+    children.append(child)
+    
+  data = { "name": "",
+            "children": children}
+
 
   return jsonify(data)
 
