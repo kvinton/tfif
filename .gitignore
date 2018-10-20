@@ -5,3 +5,4 @@ credentials.json
 secrets.sh
 token.json
 tfif-a623c8b3e1a6.json
+sendgrid.env
