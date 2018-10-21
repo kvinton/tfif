@@ -20,7 +20,5 @@ def send_email(admiree_name, admiree_email, adj1, adj2, adj3):
 
   mail = Mail(from_email, subject, to_email, content)
   response = sg.client.mail.send.post(request_body=mail.get())
-  print(response.status_code)
-  print(response.body)
-  print(response.headers)
+
 

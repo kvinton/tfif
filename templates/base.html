@@ -1,10 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>
         {% block title %} TITLE {% endblock %}
     </title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/static/style.css">
+   <style>
+      /* .node circle {
+      cursor: pointer;
+      stroke: #3182bd;
+      stroke-width: 1.5px;
+    }
+
+    .node text {
+      font: 10px sans-serif;
+      pointer-events: none;
+      text-anchor: middle;
+    }
+
+    line.link {
+      fill: none;
+      stroke: #9ecae1;
+      stroke-width: 1.5px;
+    }*/
+  </style>
 </head>
 <body>
     {% block content %}

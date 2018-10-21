@@ -1,11 +1,48 @@
 {% extends 'base.html' %}
 
 {% block title %} tfif {% endblock %}
+<style>
+
+
+body {
+  font: 15px sans-serif;
+  color: #595959;
+  /*stroke-width: 0.2px;*/
+}
+
+.node circle {
+  cursor: pointer;
+  stroke: #595959;
+  stroke-width: 0.2px;
+}
+
+.node text {
+  /*color: #f49a3a;*/
+  stroke: #3a3a3a;
+  stroke-width: 0.2px;
+  font: 10px sans-serif;
+  pointer-events: none;
+  text-anchor: middle;
+}
+
+line.link {
+  fill: none;
+  stroke: #3a3a3a;
+  stroke-width: 0.75px;
+}
+
+</style>
 
 {% block content %}
 
-<h1> tfif </h1>
-<h2>The future is female!</h2>
+<img src="static/tfif.png" alt="tfif" class="top-image">
+
+<h3>     We asked women in tech who they looked up to. Here's who they said. </h3>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="/static/data_viz.js"></script>
+
+
 
 
 

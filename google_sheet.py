@@ -15,7 +15,6 @@ def get_all_rows_from_db():
 
     all_rows = wks.get_all_records()
 
-
     for row in all_rows:
         print("Timestamp: " + row['timestamp'])
         print("Sender email: " + row['sender_email_address'])
@@ -48,5 +47,4 @@ def send_email_to_admiree(admiree_number, row):
     send_email.send_email(admiree_name, admiree_email, adj1, adj2, adj3)
 
 
-if __name__ == "__main__":
-    get
+
