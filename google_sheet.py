@@ -1,5 +1,6 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import send_email
 
 
 def get_all_rows_from_db():
@@ -14,7 +15,6 @@ def get_all_rows_from_db():
 
     all_rows = wks.get_all_records()
 
-
     for row in all_rows:
         print("Timestamp: " + row['timestamp'])
         print("Sender email: " + row['sender_email_address'])
@@ -27,8 +27,24 @@ def get_all_rows_from_db():
         print("Adjective 3: " + row['admiree_1_adjective_3'])
         print("More info: " + row['admiree_1_more_info'])
 
+        if(row['email_sent'] != 'yes') and row['admiree_1_email_address'] == 'katie@branch.co': 
+
+          for admiree_number in ["1", "2", "3"]:
+            send_email_to_admiree(admiree_number, row)
+            
     return all_rows
 
+
+def send_email_to_admiree(admiree_number, row):
+
+  adj1 = row['admiree_' + admiree_number + '_adjective_1']
+  adj2 = row['admiree_' + admiree_number + '_adjective_2']
+  adj3 = row['admiree_' + admiree_number + '_adjective_3']
+  admiree_name = row['admiree_' + admiree_number + '_first_name']
+  admiree_email = row['admiree_' + admiree_number + '_email_address']  
+
+  if(admiree_email):  
+    send_email.send_email(admiree_name, admiree_email, adj1, adj2, adj3)
 
 
 
