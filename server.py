@@ -9,6 +9,8 @@ from datetime import datetime, timedelta
 
 from google_sheet import get_all_rows_from_db
 
+from helper import get_adjectives
+
 app = Flask(__name__)
 
 app.secret_key = "ABC"
@@ -42,12 +44,16 @@ def graph():
 
     child["name"] = row["sender_first_name"]
 
+    adjs1 = get_adjectives("1", row)
+    adjs2 = get_adjectives("2", row)
+    adjs3 = get_adjectives("3", row)
+
     child_children = []
-    child_children.append({"name": row["admiree_1_first_name"], "size": 50000})
+    child_children.append({"name": row["admiree_1_first_name"], "size": 50000, "adjectives": adjs1})
     if row["admiree_2_first_name"]:
-      child_children.append({"name": row["admiree_2_first_name"], "size": 50000})
+      child_children.append({"name": row["admiree_2_first_name"], "size": 50000, "adjectives": adjs2})
     if row["admiree_3_first_name"]:
-      child_children.append({"name": row["admiree_3_first_name"], "size": 50000})
+      child_children.append({"name": row["admiree_3_first_name"], "size": 50000, "adjectives": adjs3})
 
     child["children"] = child_children
     child["size"] = 50000
@@ -56,7 +62,6 @@ def graph():
     
   data = { "name": "",
             "children": children}
-
 
   return jsonify(data)
 

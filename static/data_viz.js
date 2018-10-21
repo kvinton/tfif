@@ -1,39 +1,3 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<style>
-
-body {
-  font: 15px sans-serif;
-  color: #595959;
-  /*stroke-width: 0.2px;*/
-}
-
-.node circle {
-  cursor: pointer;
-  stroke: #595959;
-  stroke-width: 0.2px;
-}
-
-.node text {
-  /*color: #f49a3a;*/
-  stroke: #3a3a3a;
-  stroke-width: 0.2px;
-  font: 10px sans-serif;
-  pointer-events: none;
-  text-anchor: middle;
-}
-
-line.link {
-  fill: none;
-  stroke: #3a3a3a;
-  stroke-width: 0.75px;
-}
-
-</style>
-<body>
-<script src="//d3js.org/d3.v3.min.js"></script>
-<script>
-
 var width = 960,
     height = 500,
     root;
@@ -163,5 +127,3 @@ function flatten(root) {
   recurse(root);
   return nodes;
 }
-
-</script>
