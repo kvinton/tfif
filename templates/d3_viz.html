@@ -2,13 +2,22 @@
 <meta charset="utf-8">
 <style>
 
+body {
+  font: 15px sans-serif;
+  color: #595959;
+  /*stroke-width: 0.2px;*/
+}
+
 .node circle {
   cursor: pointer;
-  stroke: #3182bd;
-  stroke-width: 1.5px;
+  stroke: #595959;
+  stroke-width: 0.2px;
 }
 
 .node text {
+  /*color: #f49a3a;*/
+  stroke: #3a3a3a;
+  stroke-width: 0.2px;
   font: 10px sans-serif;
   pointer-events: none;
   text-anchor: middle;
@@ -16,8 +25,8 @@
 
 line.link {
   fill: none;
-  stroke: #9ecae1;
-  stroke-width: 1.5px;
+  stroke: #3a3a3a;
+  stroke-width: 0.75px;
 }
 
 </style>
@@ -43,7 +52,6 @@ var svg = d3.select("body").append("svg")
 var link = svg.selectAll(".link"),
     node = svg.selectAll(".node");
 
-
 d3.json("graph.json", function(error, json) {
   if (error) throw error;
 
@@ -54,6 +62,7 @@ d3.json("graph.json", function(error, json) {
 function update() {
   var nodes = flatten(root),
       links = d3.layout.tree().links(nodes);
+
 
   // Restart the force layout.
   force
@@ -74,14 +83,34 @@ function update() {
 
   node.exit().remove();
 
+  var tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "toolTip")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden")
+    .text("hello");
+  
   var nodeEnter = node.enter().append("g")
       .attr("class", "node")
       .on("click", click)
-      .on("mouseover", handleMouseOver)
+      .on("mouseover", function(d){return tooltip.style("visibility", "visible");})
+      // .on("mousemove", function(d){return tooltip.style("top", 
+      //   (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+      .on("mousemove", function(d){  tooltip
+                                    .style("left", d3.event.pageX + 10 +"px")
+                                    .style("top", d3.event.pageY - 30 + "px")
+                                    .style("display", "inline-block")
+                                    .html(d.adjectives); })
+      .on("mouseout", function(d){return tooltip.style("visibility", "hidden");})
       .call(force.drag);
 
+
   nodeEnter.append("circle")
-      .attr("r", function(d) { return Math.sqrt(d.size) / 10 || 4.5; });
+        .attr("r", function(d) { return Math.sqrt(d.size) / 10.5 || 4.5; });
+      // .attr("r", function(d) { return Math.sqrt(d.size) / 10 || 4.5; });
+  
+
 
   nodeEnter.append("text")
       .attr("dy", ".35em")
@@ -100,10 +129,11 @@ function tick() {
   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 }
 
+
 function color(d) {
-  return d._children ? "#3182bd" // collapsed package
-      : d.children ? "#c6dbef" // expanded package
-      : "#fd8d3c"; // leaf node
+  return d._children ? "#f49a3a" // collapsed package
+      : d.children ? "#fdaa54" // expanded package
+      : "#f03136"; // leaf node
 }
 
 // Toggle children on click.
@@ -119,33 +149,6 @@ function click(d) {
   update();
 }
 
-// var xScale = d3.scale.linear()
-//           .domain([0, d3.max(dataset, function (d) { return d.x + 10; })])
-//           .range([margin.left, w - margin.right]);  // Set margins for x specific
-// // We're passing in a function in d3.max to tell it what we're maxing (y value)
-// var yScale = d3.scale.linear()
-//     .domain([0, d3.max(dataset, function (d) { return d.y + 10; })])
-//     .range([margin.top, h - margin.bottom]);  // Set margins for y specific
-
-function handleMouseOver(d, i) {  // Add interactivity
-  console.log("d: " + JSON.stringify(d));
-  console.log("i: " + i);
-  // Use D3 to select element, change color and size
-  d3.select(this).attr({
-    fill: "orange",
-    r: this.size * 2
-
-  });
-  // Specify where to put label of text
-  // svg.append("text").attr({
-  //    id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
-  //     x: function() { return xScale(d.x) - 30; },
-  //     y: function() { return yScale(d.y) - 15; }
-  // })
-  // .text(function() {
-  //   return [d.x, d.y];  // Value of the text
-  // });
-}
 
 // Returns a list of all nodes under the root.
 function flatten(root) {
